@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -66,6 +67,11 @@ public class VideoServiceImpl implements VideoService {
         } catch (IOException e) {
             throw new IOException(e);
         }
+    }
+
+    @Override
+    public Optional<Object> status(String id) {
+        return Optional.empty();
     }
 
 }
