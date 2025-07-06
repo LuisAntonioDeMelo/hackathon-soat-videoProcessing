@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: pedido-ms
+  datasource:
+    url: jdbc:postgresql://localhost:5446/postgres
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+springdoc:
+  api-docs:
+    swagger-ui:
+      path: /swagger-ui.html
