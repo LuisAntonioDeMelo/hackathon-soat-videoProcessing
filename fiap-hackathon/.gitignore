@@ -31,3 +31,26 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Application Specific ###
+# Pasta onde são salvos os arquivos ZIP com frames extraídos
+outputs/
+# Manter apenas a estrutura da pasta, ignorar conteúdo
+!outputs/README.md
+
+# Pasta onde são salvos os vídeos enviados via upload
+uploads/
+# Manter apenas a estrutura da pasta, ignorar conteúdo
+!uploads/README.md
+
+# Arquivos temporários de processamento de vídeo
+video_frames_*/
+
+# Logs da aplicação
+logs/
+*.log
+
+# Arquivos de configuração local
+application-local.yml
+application-local.yaml
+application-local.properties

@@ -1,9 +1,11 @@
 package com.hackton.soat.videoprocessor.controller;
 
+import com.hackton.soat.videoprocessor.service.StatusVideoVO;
 import com.hackton.soat.videoprocessor.service.VideoService;
-import jakarta.annotation.Resource;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,9 +18,9 @@ public class VideoController {
     private final VideoService videoService;
 
      @PostMapping("/upload")
-     public ResponseEntity<?> uploadVideo(@RequestParam("file") MultipartFile file) {
-         if(file.isEmpty()) {
-             return ResponseEntity.badRequest().body("File is empty");
+     public ResponseEntity<?> uploadVideo(@RequestParam(value = "file", required = false) MultipartFile file) {
+         if(file == null || file.isEmpty()) {
+             return ResponseEntity.badRequest().body(ResponseVideoDTO.builder().message("File is empty").build());
          }
          ResponseVideoDTO responseVideoDTO = videoService.uploadVideo(file);
          return ResponseEntity.ok(responseVideoDTO);
@@ -26,19 +28,28 @@ public class VideoController {
 
     @GetMapping("/status/{id}")
     public ResponseEntity<?> status(@PathVariable String  id) {
-        return videoService.status(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        try {
+            StatusVideoVO status = videoService.obterStatus(id);
+            return ResponseEntity.ok(status);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
+    @GetMapping("/download/{id}")
+    public ResponseEntity<Resource> downloadZip(@PathVariable String id) {
+        try {
+            Resource resource = videoService.downloadZip(id);
 
-//    @GetMapping("/download/{id}")
-//    public ResponseEntity<Resource> download(@PathVariable Long id) throws IOException {
-//        var job = repo.findById(id).orElseThrow();
-//        Resource file = new FileSystemResource(job.getZipPath());
-//        return ResponseEntity.ok()
-//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + file.getFilename())
-//                .body(file);
-//    }
+            String filename = "frames_" + id + ".zip";
+
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")
+                    .body(resource);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 }

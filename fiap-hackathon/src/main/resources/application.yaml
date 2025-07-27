@@ -1,21 +1,21 @@
 spring:
   application:
-    name: pedido-ms
+    name: video-processor
   datasource:
     url: jdbc:postgresql://localhost:5446/postgres
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: create-drop
     show-sql: true
   rabbitmq:
     host: localhost
     port: 5672
-    username: guest
-    password: guest
+    username: admin
+    password: admin
   servlet:
     multipart:
       max-file-size: 100MB
@@ -25,3 +25,11 @@ springdoc:
   api-docs:
     swagger-ui:
       path: /swagger-ui.html
+
+queue:
+  video:
+    process: videoProcessQueue
+
+upload:
+  dir: uploads
+
