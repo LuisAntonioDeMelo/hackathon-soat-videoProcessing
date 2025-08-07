@@ -58,6 +58,7 @@ class VideoProcessConsumerTest {
         testRequest.setId(testUuid.toString());
         testRequest.setVideoPath(testVideoPath.toString());
         testRequest.setTimestamp("2024-01-01 10:00:00");
+        //novo teste
     }
 
     @Test
