@@ -11,4 +11,6 @@ public interface VideoService {
     StatusVideoVO obterStatus(String id);
 
     Resource downloadZip(String id);
+
+    java.util.List<ResponseVideoDTO> listAllVideos();
 }

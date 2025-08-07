@@ -33,3 +33,6 @@ queue:
 upload:
   dir: uploads
 
+output:
+  dir: outputs
+

@@ -52,4 +52,14 @@ public class VideoController {
         }
     }
 
+    @GetMapping("/list")
+    public ResponseEntity<?> listVideos() {
+        try {
+            var videos = videoService.listAllVideos();
+            return ResponseEntity.ok(videos);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
 }

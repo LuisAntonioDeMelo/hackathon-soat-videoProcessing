@@ -124,4 +124,12 @@ public class VideoServiceImpl implements VideoService {
         return resource;
     }
 
+    @Override
+    public java.util.List<ResponseVideoDTO> listAllVideos() {
+        java.util.List<VideoEntity> allVideos = videoRepository.findAll();
+        return allVideos.stream()
+                .map(ResponseVideoDTO::of)
+                .collect(java.util.stream.Collectors.toList());
+    }
+
 }
